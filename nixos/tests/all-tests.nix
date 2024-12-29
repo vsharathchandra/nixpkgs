@@ -288,6 +288,7 @@ in {
   drawterm = discoverTests (import ./drawterm.nix);
   drbd = handleTest ./drbd.nix {};
   druid = handleTestOn [ "x86_64-linux" ] ./druid {};
+  druidIndexer = handleTestOn [ "x86_64-linux" ] ./druid/indexer.nix {};
   drbd-driver = handleTest ./drbd-driver.nix {};
   dublin-traceroute = handleTest ./dublin-traceroute.nix {};
   earlyoom = handleTestOn ["x86_64-linux"] ./earlyoom.nix {};

@@ -26,17 +26,17 @@ let
       };
     in
     pkgs.testers.nixosTest rec {
-      name = "druid-hdfs-mm";
-      nodes = lib.filterAttrs (service: _: service != "indexer") common.nodes;
+      name = "druid-hdfs-indexer";
+      nodes = lib.filterAttrs (service: _: service != "mm") common.nodes;
       testScript = lib.concatLines (
         with common;
         [
           "start_all()"
           hadoop_init
-          (create_data "mm")
+          (create_data "indexer")
           service_init
           ''
-            mm.wait_for_unit("druid-middleManager")
+            mm.wait_for_unit("druid-indexer")
             mm.wait_for_open_port(8091)
           ''
           query_test
