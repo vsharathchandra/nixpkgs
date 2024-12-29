@@ -227,6 +227,7 @@ in
     };
 
     middleManager = druidServiceOption "Druid middleManager";
+    indexer = druidServiceOption "Druid indexer";
     router = druidServiceOption "Druid Router";
   };
   config = mkMerge [
@@ -285,6 +286,17 @@ in
           }
         ];
       };
+    })
+
+    (druidServiceConfig rec {
+      name = "indexer";
+
+      tmpDirs = [
+        "/var/log/druid/indexer"
+      ] ++ [ (attrByPath [ "druid.indexer.task.baseTaskDir" ] "" cfg."${name}".config) ];
+
+      allowedTCPPorts = [ (attrByPath [ "druid.plaintextPort" ] 8091 cfg."${name}".config) ];
+
     })
 
     (druidServiceConfig rec {
